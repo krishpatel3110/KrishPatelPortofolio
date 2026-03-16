@@ -22,10 +22,11 @@ const skillCategories = [
 ];
 
 const languages = [
-  { name: "English", level: "Native", percent: 100 },
-  { name: "French", level: "Fluent", percent: 85 },
-  { name: "Hindi", level: "Fluent", percent: 85 },
+  { name: "English", level: "Fluent", percent: 100 },
+  { name: "French", level: "Native", percent: 85 },
+  { name: "Hindi", level: "Native", percent: 85 },
   { name: "Gujarati", level: "Native", percent: 100 },
+  { name: "Spanish", level: "Moderate", percent: 100 },
 ];
 
 function SkillBar({ name, level, animate }) {
