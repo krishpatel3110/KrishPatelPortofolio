@@ -7,6 +7,7 @@ const navLinks = [
   { href: "/experience", label: "EXPERIENCE" },
   { href: "/projects", label: "PORTFOLIO" },
   { href: "/about", label: "SKILLS" },
+  { href: "/certifications", label: "CERTIFICATIONS" },
 ];
 
 export const applyTheme = (isDark) => {
