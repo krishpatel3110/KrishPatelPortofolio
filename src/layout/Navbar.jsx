@@ -1,14 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Sun, Moon } from "lucide-react";
-
-const navLinks = [
-  { href: "/", label: "ME" },
-  { href: "/experience", label: "EXPERIENCE" },
-  { href: "/projects", label: "PORTFOLIO" },
-  { href: "/about", label: "SKILLS" },
-  { href: "/certifications", label: "CERTIFICATIONS" },
-];
+import { useLang } from "@/context/LanguageContext";
 
 export const applyTheme = (isDark) => {
   const root = document.documentElement;
@@ -42,15 +35,24 @@ export const applyTheme = (isDark) => {
 export const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { lang, toggleLang, t } = useLang();
   const [menuOpen, setMenuOpen] = useState(false);
   const [isDark, setIsDark] = useState(() => localStorage.getItem("theme") === "dark");
+
+  const navLinks = [
+    { href: "/", label: t("nav_me") },
+    { href: "/experience", label: t("nav_experience") },
+    { href: "/projects", label: t("nav_portfolio") },
+    { href: "/about", label: t("nav_skills") },
+    { href: "/certifications", label: t("nav_certifications") },
+    { href: "/courses", label: t("nav_courses") },
+  ];
 
   useEffect(() => {
     applyTheme(isDark);
     localStorage.setItem("theme", isDark ? "dark" : "light");
   }, [isDark]);
 
-  // Re-apply theme on route change
   useEffect(() => {
     applyTheme(isDark);
   }, [location.pathname]);
@@ -69,10 +71,13 @@ export const Navbar = () => {
   const toggleBg = isDark
     ? "text-[#7a8491] hover:text-[#ffbe5c] hover:bg-[#1f2830]"
     : "text-[#9b8a74] hover:text-[#b25120] hover:bg-[#f5f0e8]";
+  const langBg = isDark
+    ? "border-[#3d2a0a] text-[#7a8491] hover:text-[#ffbe5c] hover:border-[#ffbe5c]"
+    : "border-[#d6cfc4] text-[#9b8a74] hover:text-[#b25120] hover:border-[#b25120]";
 
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 border-b transition-colors duration-300 ${navBg}`}>
-      <nav className="max-w-5xl mx-auto px-8 h-14 flex items-center justify-between">
+      <nav className="max-w-6xl mx-auto px-8 h-14 flex items-center justify-between">
 
         {/* Logo */}
         <a
@@ -84,7 +89,7 @@ export const Navbar = () => {
         </a>
 
         {/* Desktop links */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden lg:flex items-center gap-6">
           {navLinks.map((link) => {
             const isActive = location.pathname === link.href;
             return (
@@ -92,7 +97,7 @@ export const Navbar = () => {
                 key={link.href}
                 href={link.href}
                 onClick={(e) => handleNav(e, link.href)}
-                className={`text-xs font-semibold tracking-[0.15em] pb-0.5 transition-colors relative ${
+                className={`text-xs font-semibold tracking-[0.12em] pb-0.5 transition-colors relative ${
                   isActive
                     ? `${linkActive} after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-primary`
                     : linkInactive
@@ -104,8 +109,19 @@ export const Navbar = () => {
           })}
         </div>
 
-        {/* Right: theme toggle + contact */}
-        <div className="hidden md:flex items-center gap-3">
+        {/* Right: lang toggle + theme toggle + contact */}
+        <div className="hidden lg:flex items-center gap-2">
+
+          {/* Language toggle */}
+          <button
+            onClick={toggleLang}
+            className={`px-2.5 py-1 rounded-full border text-xs font-bold tracking-widest transition-all duration-200 ${langBg}`}
+            title={lang === "en" ? "Passer en français" : "Switch to English"}
+          >
+            {lang === "en" ? "FR" : "EN"}
+          </button>
+
+          {/* Theme toggle */}
           <button
             onClick={() => setIsDark(!isDark)}
             className={`p-2 rounded-full transition-all duration-300 ${toggleBg}`}
@@ -113,25 +129,28 @@ export const Navbar = () => {
           >
             {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
           </button>
+
+          {/* Contact button */}
           <button
             onClick={(e) => handleNav(e, "/contact")}
             className="px-4 py-1.5 rounded-full bg-primary text-white text-xs font-semibold tracking-wide hover:bg-primary/90 transition-colors"
           >
-            Contact Me
+            {t("nav_contact")}
           </button>
         </div>
 
         {/* Mobile burger */}
         <button
-          className={`md:hidden p-2 text-xl ${logoColor}`}
+          className={`lg:hidden p-2 text-xl ${logoColor}`}
           onClick={() => setMenuOpen((p) => !p)}
         >
           {menuOpen ? "✕" : "☰"}
         </button>
       </nav>
 
+      {/* Mobile menu */}
       {menuOpen && (
-        <div className={`md:hidden border-t px-8 py-4 flex flex-col gap-4 transition-colors duration-300 ${navBg}`}>
+        <div className={`lg:hidden border-t px-8 py-4 flex flex-col gap-4 transition-colors duration-300 ${navBg}`}>
           {navLinks.map((link) => (
             <a
               key={link.href}
@@ -144,6 +163,12 @@ export const Navbar = () => {
           ))}
           <div className="flex items-center gap-3 pt-2 border-t border-border">
             <button
+              onClick={toggleLang}
+              className={`px-2.5 py-1 rounded-full border text-xs font-bold tracking-widest transition-all ${langBg}`}
+            >
+              {lang === "en" ? "FR" : "EN"}
+            </button>
+            <button
               onClick={() => setIsDark(!isDark)}
               className={`p-2 rounded-full transition-all ${toggleBg}`}
             >
@@ -153,7 +178,7 @@ export const Navbar = () => {
               onClick={(e) => handleNav(e, "/contact")}
               className="px-4 py-1.5 rounded-full bg-primary text-white text-xs font-semibold tracking-wide"
             >
-              Contact Me
+              {t("nav_contact")}
             </button>
           </div>
         </div>
