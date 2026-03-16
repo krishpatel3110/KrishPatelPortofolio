@@ -43,51 +43,44 @@ const experiences = [
 
 export const Experience = () => {
   return (
-    <section id="experience" className="py-24 bg-background">
-      <div className="container mx-auto px-6">
+    <section className="min-h-screen bg-[#f0ede6]">
+      <div className="max-w-5xl mx-auto px-8 pt-28 pb-16">
 
-        {/* Header */}
-        <div className="mb-16 border-b border-border pb-6 animate-fade-in">
-          <p className="text-sm font-medium text-primary uppercase tracking-widest mb-2">Career Journey</p>
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground">
-            Experience <span className="font-serif italic font-normal text-foreground/60">that speaks.</span>
+        <div className="mb-12 border-b border-[#d6cfc4] pb-5">
+          <p className="text-xs uppercase tracking-[0.2em] text-[#9b8a74] mb-1">
+            My <strong className="text-[#1a1208]">Experiences</strong>
+          </p>
+          <h2 className="text-2xl font-bold text-[#1a1208]">
+            Professional <strong>Experience</strong>
           </h2>
         </div>
 
-        {/* Timeline */}
         <div className="space-y-0">
           {experiences.map((exp, idx) => (
             <div
               key={idx}
-              className="grid md:grid-cols-[200px_1fr] gap-8 py-10 border-b border-border last:border-0 animate-fade-in"
-              style={{ animationDelay: `${(idx + 1) * 100}ms` }}
+              className="grid md:grid-cols-[180px_1fr] gap-6 py-8 border-b border-[#d6cfc4] last:border-0"
             >
-              {/* Left - Date */}
               <div>
-                <p className="text-sm text-muted-foreground font-medium">{exp.period}</p>
+                <p className="text-xs text-[#9b8a74] font-medium leading-relaxed">{exp.period}</p>
                 {exp.current && (
-                  <span className="inline-flex items-center gap-1.5 mt-2 text-xs text-primary font-medium">
-                    <span className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse" />
+                  <span className="inline-flex items-center gap-1.5 mt-1.5 text-xs text-[#b25120] font-medium">
+                    <span className="w-1.5 h-1.5 bg-[#b25120] rounded-full" />
                     Current
                   </span>
                 )}
               </div>
 
-              {/* Right - Content */}
               <div>
-                <div className="flex items-start justify-between mb-2">
-                  <div>
-                    <h3 className="text-xl font-semibold text-foreground">{exp.role}</h3>
-                    <p className="text-primary font-medium">{exp.company}</p>
-                    <p className="text-sm text-muted-foreground mt-0.5">{exp.type} · {exp.location}</p>
-                  </div>
-                </div>
-                <p className="text-muted-foreground mt-3 leading-relaxed">{exp.description}</p>
-                <div className="flex flex-wrap gap-2 mt-4">
-                  {exp.technologies.map((tech, techIdx) => (
+                <h3 className="text-base font-bold text-[#1a1208]">{exp.role}</h3>
+                <p className="text-sm font-semibold text-[#b25120]">{exp.company}</p>
+                <p className="text-xs text-[#9b8a74] mt-0.5">{exp.type} · {exp.location}</p>
+                <p className="text-sm text-[#3d2f1e] mt-3 leading-relaxed">{exp.description}</p>
+                <div className="flex flex-wrap gap-2 mt-3">
+                  {exp.technologies.map((tech, i) => (
                     <span
-                      key={techIdx}
-                      className="px-3 py-1 bg-secondary text-xs rounded-full text-muted-foreground border border-border"
+                      key={i}
+                      className="px-2.5 py-0.5 bg-[#e8dfd0] text-xs rounded-full text-[#6b5c45] border border-[#d6cfc4]"
                     >
                       {tech}
                     </span>

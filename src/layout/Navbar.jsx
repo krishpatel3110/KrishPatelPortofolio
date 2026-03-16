@@ -1,16 +1,15 @@
-import { Button } from "../components/Button";
-import { Menu, X, Sun, Moon } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { Sun, Moon } from "lucide-react";
 
 const navLinks = [
-  { href: "/about", label: "About" },
-  { href: "/projects", label: "Projects" },
-  { href: "/experience", label: "Experience" },
-  { href: "/certifications", label: "Certifications" },
+  { href: "/", label: "ME" },
+  { href: "/experience", label: "EXPERIENCE" },
+  { href: "/projects", label: "PORTFOLIO" },
+  { href: "/about", label: "SKILLS" },
 ];
 
-const applyTheme = (isDark) => {
+export const applyTheme = (isDark) => {
   const root = document.documentElement;
   if (isDark) {
     root.style.setProperty("--color-background", "#0f1418");
@@ -40,96 +39,121 @@ const applyTheme = (isDark) => {
 };
 
 export const Navbar = () => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isDark, setIsDark] = useState(() => localStorage.getItem("theme") === "dark");
   const navigate = useNavigate();
   const location = useLocation();
-
-  useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [isDark, setIsDark] = useState(() => localStorage.getItem("theme") === "dark");
 
   useEffect(() => {
     applyTheme(isDark);
     localStorage.setItem("theme", isDark ? "dark" : "light");
   }, [isDark]);
 
-  useEffect(() => { applyTheme(isDark); }, [location.pathname]);
+  // Re-apply theme on route change
+  useEffect(() => {
+    applyTheme(isDark);
+  }, [location.pathname]);
 
-  const handleNavClick = (e, href) => {
+  const handleNav = (e, href) => {
     e.preventDefault();
-    setIsMobileMenuOpen(false);
+    setMenuOpen(false);
     navigate(href);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const navBg = isDark ? "bg-[#0f1418] border-[#3d2a0a]" : "bg-[#ffffff] border-[#e8d5b0]";
+  const logoColor = isDark ? "text-[#f0f2f5]" : "text-[#1a1208]";
+  const linkActive = isDark ? "text-[#f0f2f5]" : "text-[#1a1208]";
+  const linkInactive = isDark ? "text-[#7a8491] hover:text-[#f0f2f5]" : "text-[#9b8a74] hover:text-[#1a1208]";
+  const toggleBg = isDark
+    ? "text-[#7a8491] hover:text-[#ffbe5c] hover:bg-[#1f2830]"
+    : "text-[#9b8a74] hover:text-[#b25120] hover:bg-[#f5f0e8]";
+
   return (
-    <header className={`fixed top-0 left-0 right-0 transition-all duration-300 z-50 ${
-      isScrolled ? "bg-background/95 backdrop-blur-sm border-b border-border shadow-sm" : "bg-transparent"
-    }`}>
-      <nav className="container mx-auto px-6 h-16 flex items-center justify-between">
+    <header className={`fixed top-0 left-0 right-0 z-50 border-b transition-colors duration-300 ${navBg}`}>
+      <nav className="max-w-5xl mx-auto px-8 h-14 flex items-center justify-between">
 
         {/* Logo */}
-        <a href="/" onClick={(e) => { e.preventDefault(); navigate("/"); }}
-          className="text-xl font-bold text-foreground hover:text-primary transition-colors cursor-pointer">
+        <a
+          href="/"
+          onClick={(e) => handleNav(e, "/")}
+          className={`text-lg font-bold tracking-tight transition-colors ${logoColor}`}
+        >
           Krish<span className="text-primary font-black">Patel</span>
         </a>
 
-        {/* Desktop Nav */}
+        {/* Desktop links */}
         <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link, index) => (
+          {navLinks.map((link) => {
+            const isActive = location.pathname === link.href;
+            return (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={(e) => handleNav(e, link.href)}
+                className={`text-xs font-semibold tracking-[0.15em] pb-0.5 transition-colors relative ${
+                  isActive
+                    ? `${linkActive} after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-primary`
+                    : linkInactive
+                }`}
+              >
+                {link.label}
+              </a>
+            );
+          })}
+        </div>
+
+        {/* Right: theme toggle + contact */}
+        <div className="hidden md:flex items-center gap-3">
+          <button
+            onClick={() => setIsDark(!isDark)}
+            className={`p-2 rounded-full transition-all duration-300 ${toggleBg}`}
+            aria-label="Toggle theme"
+          >
+            {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+          </button>
+          <button
+            onClick={(e) => handleNav(e, "/contact")}
+            className="px-4 py-1.5 rounded-full bg-primary text-white text-xs font-semibold tracking-wide hover:bg-primary/90 transition-colors"
+          >
+            Contact Me
+          </button>
+        </div>
+
+        {/* Mobile burger */}
+        <button
+          className={`md:hidden p-2 text-xl ${logoColor}`}
+          onClick={() => setMenuOpen((p) => !p)}
+        >
+          {menuOpen ? "✕" : "☰"}
+        </button>
+      </nav>
+
+      {menuOpen && (
+        <div className={`md:hidden border-t px-8 py-4 flex flex-col gap-4 transition-colors duration-300 ${navBg}`}>
+          {navLinks.map((link) => (
             <a
+              key={link.href}
               href={link.href}
-              key={index}
-              onClick={(e) => handleNavClick(e, link.href)}
-              className={`text-sm font-medium transition-colors cursor-pointer relative pb-1 ${
-                location.pathname === link.href
-                  ? "text-primary after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-primary"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
+              onClick={(e) => handleNav(e, link.href)}
+              className={`text-xs font-semibold tracking-[0.15em] transition-colors ${linkInactive}`}
             >
               {link.label}
             </a>
           ))}
-        </div>
-
-        {/* Right Actions */}
-        <div className="hidden md:flex items-center gap-3">
-          <button
-            onClick={() => setIsDark(!isDark)}
-            className="p-2 rounded-full hover:bg-secondary transition-colors text-muted-foreground hover:text-foreground"
-          >
-            {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-          </button>
-          <Button size="sm" onClick={(e) => handleNavClick(e, "/contact")}>
-            Contact Me
-          </Button>
-        </div>
-
-        {/* Mobile */}
-        <button className="md:hidden p-2 text-foreground" onClick={() => setIsMobileMenuOpen(p => !p)}>
-          {isMobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
-        </button>
-      </nav>
-
-      {isMobileMenuOpen && (
-        <div className="md:hidden bg-background border-b border-border animate-fade-in">
-          <div className="container mx-auto px-6 py-4 flex flex-col gap-4">
-            {navLinks.map((link, index) => (
-              <a href={link.href} key={index} onClick={(e) => handleNavClick(e, link.href)}
-                className="text-muted-foreground hover:text-foreground py-2 text-sm font-medium">
-                {link.label}
-              </a>
-            ))}
-            <div className="flex items-center gap-3 pt-2">
-              <button onClick={() => setIsDark(!isDark)} className="p-2 rounded-full hover:bg-secondary transition-colors">
-                {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-              </button>
-              <Button size="sm" onClick={(e) => handleNavClick(e, "/contact")}>Contact Me</Button>
-            </div>
+          <div className="flex items-center gap-3 pt-2 border-t border-border">
+            <button
+              onClick={() => setIsDark(!isDark)}
+              className={`p-2 rounded-full transition-all ${toggleBg}`}
+            >
+              {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            </button>
+            <button
+              onClick={(e) => handleNav(e, "/contact")}
+              className="px-4 py-1.5 rounded-full bg-primary text-white text-xs font-semibold tracking-wide"
+            >
+              Contact Me
+            </button>
           </div>
         </div>
       )}
