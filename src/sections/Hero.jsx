@@ -1,7 +1,7 @@
 import { Button } from "@/components/Button";
 import { ArrowRight, Download } from "lucide-react";
 import { AnimatedBorderButton } from "@/components/AnimatedBorderButton";
-import { Github, Linkedin, Twitter } from "lucide-react";
+import { Github, Linkedin, Instagram } from "lucide-react";
 
 export const Hero = () => {
   return (
@@ -77,7 +77,7 @@ export const Hero = () => {
               {[
                 { icon: Github, href: "https://github.com/krishpatel3110" },
                 { icon: Linkedin, href: "https://www.linkedin.com/in/krish-p-58a83a323/" },
-                { icon: Twitter, href: "https://twitter.com/krish_p" },
+                { icon: Instagram, href: "https://twitter.com/krish_p" },
               ].map((social, idx) => (
                 <a
                   key={idx}
