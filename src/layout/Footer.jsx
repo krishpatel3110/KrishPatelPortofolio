@@ -1,63 +1,26 @@
-import { Github, Linkedin, Instagram, Twitter } from "lucide-react";
+import { Github, Linkedin, Instagram } from "lucide-react";
 
 const socialLinks = [
   { icon: Github, href: "https://github.com/krishpatel3110", label: "GitHub" },
   { icon: Linkedin, href: "https://www.linkedin.com/in/krish-p-58a83a323/", label: "LinkedIn" },
-  { icon: Instagram, href: "#", label: "Instagram" },
-];
-
-const footerLinks = [
-  { href: "#about", label: "About" },
-  { href: "#projects", label: "Projects" },
-  { href: "#experience", label: "Experience" },
-  { href: "#contact", label: "Contact" },
+  { icon: Instagram, href: "https://www.instagram.com/ptl.krishh?igsh=MTJzcTU4ODByYWMxeA%3D%3D&utm_source=qr", label: "Instagram" },
 ];
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
-
   return (
-    <footer className="py-12 border-t border-border">
-      <div className="container mx-auto px-6">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-          {/* Logo & Copyright */}
-          <div className="text-center md:text-left">
-            <a href="#" className="text-xl font-bold tracking-tight">
-              KP<span className="text-primary">.</span>
+    <footer className="py-8 border-t border-border bg-background">
+      <div className="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+        <p className="text-sm text-muted-foreground">
+          © {currentYear} <span className="font-medium text-foreground">Krish Patel</span>. All rights reserved.
+        </p>
+        <div className="flex items-center gap-4">
+          {socialLinks.map((social) => (
+            <a key={social.label} href={social.href} target="_blank" rel="noopener noreferrer"
+              className="text-muted-foreground hover:text-primary transition-colors">
+              <social.icon className="w-4 h-4" />
             </a>
-            <p className="text-sm text-muted-foreground mt-2">
-              © {currentYear} Krish Patel. All rights reserved.
-            </p>
-          </div>
-
-          {/* Links */}
-          <nav className="flex flex-wrap justify-center gap-6">
-            {footerLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                {link.label}
-              </a>
-            ))}
-          </nav>
-
-          {/* Social Links */}
-          <div className="flex items-center gap-4">
-            {socialLinks.map((social) => (
-              <a
-                key={social.label}
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={social.label}
-                className="p-2 rounded-full glass hover:bg-primary/10 hover:text-primary transition-all"
-              >
-                <social.icon className="w-5 h-5" />
-              </a>
-            ))}
-          </div>
+          ))}
         </div>
       </div>
     </footer>

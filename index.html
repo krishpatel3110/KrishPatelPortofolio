@@ -2,9 +2,39 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/jpeg" href="/Krish-logo.jpg" className="w-12 h-12 rounded-full object-cover border-2 border-primary"/>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>krish-portfolio</title>
+    <script>
+      (function() {
+        const theme = localStorage.getItem("theme");
+        const isDark = theme === "dark";
+        const root = document.documentElement;
+        if (isDark) {
+          root.style.setProperty("--color-background", "#0f1418");
+          root.style.setProperty("--color-foreground", "#f0f2f5");
+          root.style.setProperty("--color-surface", "#1c1208");
+          root.style.setProperty("--color-card", "#1f1508");
+          root.style.setProperty("--color-border", "#3d2a0a");
+          root.style.setProperty("--color-muted", "#252e37");
+          root.style.setProperty("--color-muted-foreground", "#7a8491");
+          root.style.setProperty("--color-secondary", "#1f2830");
+          root.style.setProperty("--color-secondary-foreground", "#ffbe5c");
+          root.style.backgroundColor = "#0f1418";
+        } else {
+          root.style.setProperty("--color-background", "#ffffff");
+          root.style.setProperty("--color-foreground", "#1a1208");
+          root.style.setProperty("--color-surface", "#f5f0e8");
+          root.style.setProperty("--color-card", "#faf6f0");
+          root.style.setProperty("--color-border", "#e8d5b0");
+          root.style.setProperty("--color-muted", "#f0ebe2");
+          root.style.setProperty("--color-muted-foreground", "#6b5c45");
+          root.style.setProperty("--color-secondary", "#f5f0e8");
+          root.style.setProperty("--color-secondary-foreground", "#b25120");
+          root.style.backgroundColor = "#ffffff";
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

@@ -26,7 +26,6 @@ const languages = [
   { name: "French", level: "Native", percent: 100 },
   { name: "Hindi", level: "Native", percent: 95 },
   { name: "Gujarati", level: "Native", percent: 100 },
-  { name: "Spanish", level: "Moderate", percent: 65 },
 ];
 
 function SkillBar({ name, level, animate }) {
@@ -38,18 +37,15 @@ function SkillBar({ name, level, animate }) {
   }, [animate, level]);
 
   return (
-    <div className="mb-3">
-      <div className="flex justify-between items-center mb-1">
+    <div className="mb-4">
+      <div className="flex justify-between items-center mb-1.5">
         <span className="text-sm font-medium text-foreground">{name}</span>
         <span className="text-xs text-primary font-semibold">{level}%</span>
       </div>
-      <div className="h-2 rounded-full bg-surface border border-border/50 overflow-hidden">
+      <div className="h-1.5 rounded-full bg-border overflow-hidden">
         <div
-          className="h-full rounded-full transition-all duration-1000 ease-out"
-          style={{
-            width: `${width}%`,
-            background: "linear-gradient(90deg, #ffbe5c, #f5a623)",
-          }}
+          className="h-full rounded-full transition-all duration-1000 ease-out bg-primary"
+          style={{ width: `${width}%` }}
         />
       </div>
     </div>
@@ -66,17 +62,14 @@ function LangBar({ name, level, percent, animate }) {
 
   return (
     <div className="mb-4">
-      <div className="flex justify-between items-center mb-1">
+      <div className="flex justify-between items-center mb-1.5">
         <span className="text-sm font-medium text-foreground">{name}</span>
         <span className="text-xs text-primary font-semibold">{level}</span>
       </div>
-      <div className="h-2 rounded-full bg-surface border border-border/50 overflow-hidden">
+      <div className="h-1.5 rounded-full bg-border overflow-hidden">
         <div
-          className="h-full rounded-full transition-all duration-1000 ease-out"
-          style={{
-            width: `${width}%`,
-            background: "linear-gradient(90deg, #ffbe5c, #f5a623)",
-          }}
+          className="h-full rounded-full transition-all duration-1000 ease-out bg-primary"
+          style={{ width: `${width}%` }}
         />
       </div>
     </div>
@@ -97,50 +90,45 @@ export const About = () => {
   }, []);
 
   return (
-    <section id="about" className="py-32 relative overflow-hidden" ref={ref}>
-      <div className="container mx-auto px-6 relative z-10">
+    <section id="about" className="py-24 bg-background" ref={ref}>
+      <div className="container mx-auto px-6">
 
-        {/* Section Header */}
-        <div className="mb-12 animate-fade-in">
-          <span className="text-secondary-foreground text-sm font-medium tracking-wider uppercase">
-            About Me
-          </span>
-          <h2 className="text-4xl md:text-5xl font-bold leading-tight mt-4 text-secondary-foreground">
-            Skills &{" "}
-            <span className="font-serif italic font-normal text-white">
-              Languages
-            </span>
+        {/* Header */}
+        <div className="mb-16 border-b border-border pb-6 animate-fade-in">
+          <p className="text-sm font-medium text-primary uppercase tracking-widest mb-2">About Me</p>
+          <h2 className="text-4xl md:text-5xl font-bold text-foreground">
+            Skills & <span className="font-serif italic font-normal text-foreground/60">Languages</span>
           </h2>
         </div>
 
-        {/* Skills Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Grid */}
+        <div className="grid md:grid-cols-3 gap-12">
 
           {/* Programming Languages */}
-          <div className="glass rounded-2xl p-6 border border-border/50 hover:border-primary/30 transition-all duration-300 animate-fade-in animation-delay-100">
-            <h4 className="text-sm font-semibold text-primary mb-5 uppercase tracking-wider">
+          <div className="animate-fade-in animation-delay-100">
+            <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-6 pb-2 border-b border-border">
               Programming Languages
-            </h4>
+            </h3>
             {skillCategories[0].skills.map((skill, idx) => (
               <SkillBar key={idx} name={skill.name} level={skill.level} animate={animate} />
             ))}
           </div>
 
-          {/* Frameworks / Libraries */}
-          <div className="glass rounded-2xl p-6 border border-border/50 hover:border-primary/30 transition-all duration-300 animate-fade-in animation-delay-200">
-            <h4 className="text-sm font-semibold text-primary mb-5 uppercase tracking-wider">
+          {/* Frameworks */}
+          <div className="animate-fade-in animation-delay-200">
+            <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-6 pb-2 border-b border-border">
               Frameworks / Libraries
-            </h4>
+            </h3>
             {skillCategories[1].skills.map((skill, idx) => (
               <SkillBar key={idx} name={skill.name} level={skill.level} animate={animate} />
             ))}
           </div>
 
           {/* Languages */}
-          <div className="glass rounded-2xl p-6 border border-border/50 hover:border-primary/30 transition-all duration-300 animate-fade-in animation-delay-300">
-            <h4 className="text-sm font-semibold text-primary mb-5 uppercase tracking-wider">
+          <div className="animate-fade-in animation-delay-300">
+            <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-6 pb-2 border-b border-border">
               Languages
-            </h4>
+            </h3>
             {languages.map((lang, idx) => (
               <LangBar key={idx} name={lang.name} level={lang.level} percent={lang.percent} animate={animate} />
             ))}

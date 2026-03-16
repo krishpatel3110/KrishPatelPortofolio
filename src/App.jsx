@@ -8,40 +8,24 @@ import {Contact} from "@/sections/Contact";
 import {Navbar} from "@/layout/Navbar";
 import {Footer} from "@/layout/Footer";
 
-function Home() {
-  return (
-    <div className="min-h-screen overflow-x-hidden">
-      <Navbar />
-      <main>
-        <Hero />
-        <About />
-        <Experience />
-        <Projects />
-        <Contact />
-      </main>
-      <Footer />
-    </div>
-  );
-}
-
-function CertificationsPage() {
-  return (
-    <div className="min-h-screen overflow-x-hidden">
-      <Navbar />
-      <main>
-        <Testimonials />
-      </main>
-      <Footer />
-    </div>
-  );
-}
+const PageWrapper = ({ children }) => (
+  <div className="min-h-screen overflow-x-hidden">
+    <Navbar />
+    <main>{children}</main>
+    <Footer />
+  </div>
+);
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/certifications" element={<CertificationsPage />} />
+        <Route path="/" element={<PageWrapper><Hero /></PageWrapper>} />
+        <Route path="/about" element={<PageWrapper><About /></PageWrapper>} />
+        <Route path="/projects" element={<PageWrapper><Projects /></PageWrapper>} />
+        <Route path="/experience" element={<PageWrapper><Experience /></PageWrapper>} />
+        <Route path="/certifications" element={<PageWrapper><Testimonials /></PageWrapper>} />
+        <Route path="/contact" element={<PageWrapper><Contact /></PageWrapper>} />
       </Routes>
     </BrowserRouter>
   );

@@ -2,122 +2,100 @@ const experiences = [
   {
     period: "Feb 2026 — Present",
     role: "Virtual Archives Beta Tester",
-    company: "Contextral · Internship",
-    location: "Newark, New Jersey · Remote",
-    description:
-      "Testing and analyzing virtual archive systems, providing detailed reports and technical analysis to improve product quality and user experience.",
+    company: "Contextral",
+    type: "Internship · Remote",
+    location: "Newark, New Jersey",
+    description: "Testing and analyzing virtual archive systems, providing detailed reports and technical analysis to improve product quality and user experience.",
     technologies: ["Reporting & Analysis", "Technical Analysis"],
     current: true,
   },
   {
     period: "Feb 2026 — Present",
     role: "Ambassador",
-    company: "Naano · Part-time",
-    location: "Paris, Île-de-France · Remote",
-    description:
-      "Representing and promoting the brand through social media advertising and networking, building awareness and community engagement.",
-    technologies: ["Social Media Advertising", "Networking"],
+    company: "Naano",
+    type: "Part-time · Remote",
+    location: "Paris, France",
+    description: "Representing and promoting the brand through social media advertising and networking, building awareness and community engagement.",
+    technologies: ["Social Media", "Networking"],
     current: true,
   },
   {
     period: "Jun 2025 — Aug 2025",
     role: "Crew Member",
-    company: "McDonald's · Contract",
-    location: "Ferrières-en-Bray, Normandy, France · On-site",
-    description:
-      "Delivered excellent customer service in a fast-paced environment, developing strong communication and hospitality management skills.",
-    technologies: ["Communication", "Hospitality Management"],
+    company: "McDonald's",
+    type: "Contract · On-site",
+    location: "Ferrières-en-Bray, France",
+    description: "Delivered excellent customer service in a fast-paced environment, developing strong communication and hospitality management skills.",
+    technologies: ["Communication", "Hospitality"],
     current: false,
   },
   {
     period: "Jan 2022 — May 2025",
     role: "Hotel Managing Supervisor",
-    company: "Hotel Le Saint Aubin - Restaurant Natraj · Self-employed",
-    location: "Gournay-en-Bray, Normandy, France · On-site",
-    description:
-      "Supervised daily hotel and restaurant operations over 3+ years, leading a team and ensuring exceptional guest experiences through strong leadership and time management.",
-    technologies: ["Time Management", "Leadership"],
+    company: "Hotel Le Saint Aubin",
+    type: "Self-employed · On-site",
+    location: "Gournay-en-Bray, France",
+    description: "Supervised daily hotel and restaurant operations over 3+ years, leading a team and ensuring exceptional guest experiences.",
+    technologies: ["Leadership", "Time Management"],
     current: false,
   },
 ];
 
 export const Experience = () => {
   return (
-    <section id="experience" className="py-32 relative overflow-hidden">
-      <div className="absolute top-1/2 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl -translate-y-1/2" />
+    <section id="experience" className="py-24 bg-background">
+      <div className="container mx-auto px-6">
 
-      <div className="container mx-auto px-6 relative z-10">
-        {/* Section Header */}
-        <div className="max-w-3xl mb-16">
-          <span className="text-secondary-foreground text-sm font-medium tracking-wider uppercase animate-fade-in">
-            Career Journey
-          </span>
-          <h2 className="text-4xl md:text-5xl font-bold mt-4 mb-6 animate-fade-in animation-delay-100 text-secondary-foreground">
-            Experience that{" "}
-            <span className="font-serif italic font-normal text-white">
-              speaks volumes.
-            </span>
+        {/* Header */}
+        <div className="mb-16 border-b border-border pb-6 animate-fade-in">
+          <p className="text-sm font-medium text-primary uppercase tracking-widest mb-2">Career Journey</p>
+          <h2 className="text-4xl md:text-5xl font-bold text-foreground">
+            Experience <span className="font-serif italic font-normal text-foreground/60">that speaks.</span>
           </h2>
-          <p className="text-muted-foreground animate-fade-in animation-delay-200">
-            A timeline of my professional journey, from hospitality management to tech internships.
-          </p>
         </div>
 
         {/* Timeline */}
-        <div className="relative">
-          <div className="timeline-glow absolute left-0 md:left-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-primary/70 via-primary/30 to-transparent md:-translate-x-1/2" />
+        <div className="space-y-0">
+          {experiences.map((exp, idx) => (
+            <div
+              key={idx}
+              className="grid md:grid-cols-[200px_1fr] gap-8 py-10 border-b border-border last:border-0 animate-fade-in"
+              style={{ animationDelay: `${(idx + 1) * 100}ms` }}
+            >
+              {/* Left - Date */}
+              <div>
+                <p className="text-sm text-muted-foreground font-medium">{exp.period}</p>
+                {exp.current && (
+                  <span className="inline-flex items-center gap-1.5 mt-2 text-xs text-primary font-medium">
+                    <span className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse" />
+                    Current
+                  </span>
+                )}
+              </div>
 
-          <div className="space-y-12">
-            {experiences.map((exp, idx) => (
-              <div
-                key={idx}
-                className="relative grid md:grid-cols-2 gap-8 animate-fade-in"
-                style={{ animationDelay: `${(idx + 1) * 150}ms` }}
-              >
-                {/* Timeline Dot */}
-                <div className="absolute left-0 md:left-1/2 top-0 w-3 h-3 bg-primary rounded-full -translate-x-1/2 ring-4 ring-background z-10">
-                  {exp.current && (
-                    <span className="absolute inset-0 rounded-full bg-primary animate-ping opacity-75" />
-                  )}
-                </div>
-
-                {/* Content */}
-                <div
-                  className={`pl-8 md:pl-0 ${
-                    idx % 2 === 0
-                      ? "md:pr-16 md:text-right"
-                      : "md:col-start-2 md:pl-16"
-                  }`}
-                >
-                  <div className="glass p-6 rounded-2xl border border-primary/30 hover:border-primary/50 transition-all duration-500">
-                    <span className="text-sm text-primary font-medium">
-                      {exp.period}
-                    </span>
-                    <h3 className="text-xl font-semibold mt-2">{exp.role}</h3>
-                    <p className="text-muted-foreground">{exp.company}</p>
-                    <p className="text-xs text-muted-foreground/60 mt-1">{exp.location}</p>
-                    <p className="text-sm text-muted-foreground mt-4">
-                      {exp.description}
-                    </p>
-                    <div
-                      className={`flex flex-wrap gap-2 mt-4 ${
-                        idx % 2 === 0 ? "md:justify-end" : ""
-                      }`}
-                    >
-                      {exp.technologies.map((tech, techIdx) => (
-                        <span
-                          key={techIdx}
-                          className="px-3 py-1 bg-surface text-xs rounded-full text-muted-foreground border border-border/50"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
+              {/* Right - Content */}
+              <div>
+                <div className="flex items-start justify-between mb-2">
+                  <div>
+                    <h3 className="text-xl font-semibold text-foreground">{exp.role}</h3>
+                    <p className="text-primary font-medium">{exp.company}</p>
+                    <p className="text-sm text-muted-foreground mt-0.5">{exp.type} · {exp.location}</p>
                   </div>
                 </div>
+                <p className="text-muted-foreground mt-3 leading-relaxed">{exp.description}</p>
+                <div className="flex flex-wrap gap-2 mt-4">
+                  {exp.technologies.map((tech, techIdx) => (
+                    <span
+                      key={techIdx}
+                      className="px-3 py-1 bg-secondary text-xs rounded-full text-muted-foreground border border-border"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
