@@ -21,6 +21,13 @@ const skillCategories = [
   },
 ];
 
+const languages = [
+  { name: "English", level: "Native", percent: 100 },
+  { name: "French", level: "Fluent", percent: 85 },
+  { name: "Hindi", level: "Fluent", percent: 85 },
+  { name: "Gujarati", level: "Native", percent: 100 },
+];
+
 function SkillBar({ name, level, animate }) {
   const [width, setWidth] = useState(0);
   useEffect(() => {
@@ -48,6 +55,33 @@ function SkillBar({ name, level, animate }) {
   );
 }
 
+function LangBar({ name, level, percent, animate }) {
+  const [width, setWidth] = useState(0);
+  useEffect(() => {
+    if (!animate) return;
+    const t = setTimeout(() => setWidth(percent), 150);
+    return () => clearTimeout(t);
+  }, [animate, percent]);
+
+  return (
+    <div className="mb-4">
+      <div className="flex justify-between items-center mb-1">
+        <span className="text-sm font-medium text-foreground">{name}</span>
+        <span className="text-xs text-primary font-semibold">{level}</span>
+      </div>
+      <div className="h-2 rounded-full bg-surface border border-border/50 overflow-hidden">
+        <div
+          className="h-full rounded-full transition-all duration-1000 ease-out"
+          style={{
+            width: `${width}%`,
+            background: "linear-gradient(90deg, #ffbe5c, #f5a623)",
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+
 export const About = () => {
   const [animate, setAnimate] = useState(false);
   const ref = useRef(null);
@@ -55,7 +89,7 @@ export const About = () => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => { if (entry.isIntersecting) setAnimate(true); },
-      { threshold: 0.2 }
+      { threshold: 0.1 }
     );
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
@@ -64,72 +98,51 @@ export const About = () => {
   return (
     <section id="about" className="py-32 relative overflow-hidden" ref={ref}>
       <div className="container mx-auto px-6 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-16 items-start">
 
-          {/* Left Column */}
-          <div className="space-y-8">
-            <div className="animate-fade-in">
-              <span className="text-secondary-foreground text-sm font-medium tracking-wider uppercase">
-                About Me
-              </span>
-            </div>
+        {/* Section Header */}
+        <div className="mb-12 animate-fade-in">
+          <span className="text-secondary-foreground text-sm font-medium tracking-wider uppercase">
+            About Me
+          </span>
+          <h2 className="text-4xl md:text-5xl font-bold leading-tight mt-4 text-secondary-foreground">
+            Skills &{" "}
+            <span className="font-serif italic font-normal text-white">
+              Languages
+            </span>
+          </h2>
+        </div>
 
-            <h2 className="text-4xl md:text-5xl font-bold leading-tight animate-fade-in animation-delay-100 text-secondary-foreground">
-              Building the future,
-              <span className="font-serif italic font-normal text-white">
-                {" "}one component at a time.
-              </span>
-            </h2>
+        {/* Skills Grid */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
-            <div className="space-y-4 text-muted-foreground animate-fade-in animation-delay-200">
-              <p>
-                I'm a Computer Science freshman at NJIT with a passion for
-                software engineering and building systems that solve real
-                problems. My journey started with curiosity about how the web
-                works, and has grown into hands-on experience with modern
-                technologies.
-              </p>
-              <p>
-                I'm currently focused on sharpening my skills in web
-                development, algorithms, and full-stack engineering — always
-                looking to learn and grow as a developer.
-              </p>
-            </div>
-
-            <div className="glass rounded-2xl p-6 glow-border animate-fade-in animation-delay-300">
-              <p className="text-lg font-medium italic text-foreground">
-                "My goal is to grow into a strong engineer and contribute to
-                impactful technology that makes a difference."
-              </p>
-            </div>
+          {/* Programming Languages */}
+          <div className="glass rounded-2xl p-6 border border-border/50 hover:border-primary/30 transition-all duration-300 animate-fade-in animation-delay-100">
+            <h4 className="text-sm font-semibold text-primary mb-5 uppercase tracking-wider">
+              Programming Languages
+            </h4>
+            {skillCategories[0].skills.map((skill, idx) => (
+              <SkillBar key={idx} name={skill.name} level={skill.level} animate={animate} />
+            ))}
           </div>
 
-          {/* Right Column - Skills */}
-          <div className="space-y-6 animate-fade-in animation-delay-200">
-            <h3 className="text-sm font-medium tracking-wider uppercase text-secondary-foreground">
-              My Skills
-            </h3>
+          {/* Frameworks / Libraries */}
+          <div className="glass rounded-2xl p-6 border border-border/50 hover:border-primary/30 transition-all duration-300 animate-fade-in animation-delay-200">
+            <h4 className="text-sm font-semibold text-primary mb-5 uppercase tracking-wider">
+              Frameworks / Libraries
+            </h4>
+            {skillCategories[1].skills.map((skill, idx) => (
+              <SkillBar key={idx} name={skill.name} level={skill.level} animate={animate} />
+            ))}
+          </div>
 
-            <div className="grid sm:grid-cols-2 gap-6">
-              {skillCategories.map((category, catIdx) => (
-                <div
-                  key={catIdx}
-                  className="glass rounded-2xl p-6 border border-border/50 hover:border-primary/30 transition-all duration-300"
-                >
-                  <h4 className="text-sm font-semibold text-primary mb-4 uppercase tracking-wider">
-                    {category.title}
-                  </h4>
-                  {category.skills.map((skill, skillIdx) => (
-                    <SkillBar
-                      key={skillIdx}
-                      name={skill.name}
-                      level={skill.level}
-                      animate={animate}
-                    />
-                  ))}
-                </div>
-              ))}
-            </div>
+          {/* Languages */}
+          <div className="glass rounded-2xl p-6 border border-border/50 hover:border-primary/30 transition-all duration-300 animate-fade-in animation-delay-300">
+            <h4 className="text-sm font-semibold text-primary mb-5 uppercase tracking-wider">
+              Languages
+            </h4>
+            {languages.map((lang, idx) => (
+              <LangBar key={idx} name={lang.name} level={lang.level} percent={lang.percent} animate={animate} />
+            ))}
           </div>
 
         </div>
