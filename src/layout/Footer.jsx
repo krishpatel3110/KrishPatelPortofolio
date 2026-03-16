@@ -1,9 +1,9 @@
-import { Github, Linkedin, Instagram, Heart } from "lucide-react";
+import { Github, Linkedin, Instagram, Twitter } from "lucide-react";
 
 const socialLinks = [
-  { icon: Github, href: "#", label: "GitHub" },
-  { icon: Linkedin, href: "#", label: "LinkedIn" },
-  { icon: Twitter, href: "#", label: "Instagram" },
+  { icon: Github, href: "https://github.com/krishpatel3110", label: "GitHub" },
+  { icon: Linkedin, href: "https://www.linkedin.com/in/krish-p-58a83a323/", label: "LinkedIn" },
+  { icon: Instagram, href: "#", label: "Instagram" },
 ];
 
 const footerLinks = [
@@ -49,6 +49,8 @@ export const Footer = () => {
               <a
                 key={social.label}
                 href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label={social.label}
                 className="p-2 rounded-full glass hover:bg-primary/10 hover:text-primary transition-all"
               >
