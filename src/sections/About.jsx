@@ -1,36 +1,71 @@
-import { Code2, Lightbulb, Rocket, Users } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
-const highlights = [
+const skillCategories = [
   {
-    icon: Code2,
-    title: "Clean Code",
-    description:
-      "Writing maintainable, scalable code that stands the test of time.",
+    title: "Programming Languages",
+    skills: [
+      { name: "Python", level: 80 },
+      { name: "Java", level: 70 },
+      { name: "JavaScript", level: 75 },
+      { name: "HTML / CSS", level: 85 },
+    ],
   },
   {
-    icon: Rocket,
-    title: "Performance",
-    description:
-      "Optimizing for speed and delivering lightning-fast user experiences.",
-  },
-  {
-    icon: Users,
-    title: "Collaboration",
-    description: "Working closely with teams to bring ideas to life.",
-  },
-  {
-    icon: Lightbulb,
-    title: "Innovation",
-    description:
-      "Staying ahead with the latest technologies and best practices.",
+    title: "Frameworks / Libraries",
+    skills: [
+      { name: "React", level: 70 },
+      { name: "Tailwind CSS", level: 75 },
+      { name: "Vite", level: 65 },
+      { name: "EmailJS", level: 60 },
+    ],
   },
 ];
 
-export const About = () => {
+function SkillBar({ name, level, animate }) {
+  const [width, setWidth] = useState(0);
+  useEffect(() => {
+    if (!animate) return;
+    const t = setTimeout(() => setWidth(level), 150);
+    return () => clearTimeout(t);
+  }, [animate, level]);
+
   return (
-    <section id="about" className="py-32 relative overflow-hidden">
+    <div className="mb-3">
+      <div className="flex justify-between items-center mb-1">
+        <span className="text-sm font-medium text-foreground">{name}</span>
+        <span className="text-xs text-primary font-semibold">{level}%</span>
+      </div>
+      <div className="h-2 rounded-full bg-surface border border-border/50 overflow-hidden">
+        <div
+          className="h-full rounded-full transition-all duration-1000 ease-out"
+          style={{
+            width: `${width}%`,
+            background: "linear-gradient(90deg, #ffbe5c, #f5a623)",
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+
+export const About = () => {
+  const [animate, setAnimate] = useState(false);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setAnimate(true); },
+      { threshold: 0.2 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <section id="about" className="py-32 relative overflow-hidden" ref={ref}>
       <div className="container mx-auto px-6 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-16 items-start">
+
           {/* Left Column */}
           <div className="space-y-8">
             <div className="animate-fade-in">
@@ -42,62 +77,63 @@ export const About = () => {
             <h2 className="text-4xl md:text-5xl font-bold leading-tight animate-fade-in animation-delay-100 text-secondary-foreground">
               Building the future,
               <span className="font-serif italic font-normal text-white">
-                {" "}
-                one component at a time.
+                {" "}one component at a time.
               </span>
             </h2>
 
             <div className="space-y-4 text-muted-foreground animate-fade-in animation-delay-200">
               <p>
-                I'm a passionate software engineer with over 5 years of
-                experience crafting digital products that make a difference. My
-                journey started with a curiosity for how things work on the web,
-                and it has evolved into a deep expertise in modern frontend
+                I'm a Computer Science freshman at NJIT with a passion for
+                software engineering and building systems that solve real
+                problems. My journey started with curiosity about how the web
+                works, and has grown into hands-on experience with modern
                 technologies.
               </p>
               <p>
-                I specialize in React, Next.js, and TypeScript, building
-                everything from sleek landing pages to complex enterprise
-                applications. My approach combines technical excellence with a
-                keen eye for design and user experience.
-              </p>
-              <p>
-                When I'm not coding, you'll find me exploring new technologies,
-                contributing to open-source projects, or sharing knowledge with
-                the developer community.
+                I'm currently focused on sharpening my skills in web
+                development, algorithms, and full-stack engineering — always
+                looking to learn and grow as a developer.
               </p>
             </div>
 
             <div className="glass rounded-2xl p-6 glow-border animate-fade-in animation-delay-300">
               <p className="text-lg font-medium italic text-foreground">
-                "My mission is to create digital experiences that are not just
-                functional, but truly delightful — products that users love to
-                use and developers love to maintain."
+                "My goal is to grow into a strong engineer and contribute to
+                impactful technology that makes a difference."
               </p>
             </div>
           </div>
 
-          {/* Right Column - Hilights */}
-          <div className="grid sm:grid-cols-2 gap-6">
-            {highlights.map((item, idx) => (
-              <div
-                key={idx}
-                className="glass p-6 rounded-2xl animate-fade-in"
-                style={{ animationDelay: `${(idx + 1) * 100}ms` }}
-              >
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 hover:bg-primary/20">
-                  <item.icon className="w-6 h-6 text-primary" />
+          {/* Right Column - Skills */}
+          <div className="space-y-6 animate-fade-in animation-delay-200">
+            <h3 className="text-sm font-medium tracking-wider uppercase text-secondary-foreground">
+              My Skills
+            </h3>
+
+            <div className="grid sm:grid-cols-2 gap-6">
+              {skillCategories.map((category, catIdx) => (
+                <div
+                  key={catIdx}
+                  className="glass rounded-2xl p-6 border border-border/50 hover:border-primary/30 transition-all duration-300"
+                >
+                  <h4 className="text-sm font-semibold text-primary mb-4 uppercase tracking-wider">
+                    {category.title}
+                  </h4>
+                  {category.skills.map((skill, skillIdx) => (
+                    <SkillBar
+                      key={skillIdx}
+                      name={skill.name}
+                      level={skill.level}
+                      animate={animate}
+                    />
+                  ))}
                 </div>
-                <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
-                <p className="text-sm text-muted-foreground">
-                  {item.description}
-                </p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
+
         </div>
       </div>
     </section>
   );
 };
-
