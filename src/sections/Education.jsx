@@ -1,17 +1,16 @@
 import { useLang } from "@/context/LanguageContext";
-import njitLogo from "/njit.jpg"; // place njit.png in your /public folder
 
 const educations = [
   {
-    logo: njitLogo,
+    logo: "/njit.jpg",
     school: "New Jersey Institute of Technology",
     degree_en: "Bachelor of Science – Computer Science",
     degree_fr: "Licence en Sciences – Informatique",
     period: "Aug 2025 – May 2029",
     period_fr: "Août 2025 – Mai 2029",
     grade: "3.8 / 4.0 GPA",
-    activities_en: "Active member of the Google Developer Groups (GDG) on Campus and Sankar Club.",
-    activities_fr: "Membre actif des Google Developer Groups (GDG) sur le campus et du Sankar Club.",
+    activities_en: "Active member of the Sanskar Community — contributing to cultural events, student networking, and promoting Indian heritage on campus.",
+    activities_fr: "Membre actif de la communauté Sanskar — contribution aux événements culturels, réseautage étudiant et promotion du patrimoine indien sur le campus.",
     tags: ["Physics", "Mathematics", "Algorithms", "Data Structures", "Web Dev", "Java", "Python", "React"],
     current: true,
   },
@@ -31,13 +30,12 @@ const educations = [
 ];
 
 export const Education = () => {
-  const { t, lang } = useLang();
+  const { lang } = useLang();
 
   return (
     <section id="education" className="py-24 bg-background">
       <div className="container mx-auto px-6">
 
-        {/* Header */}
         <div className="mb-16 border-b border-border pb-6 animate-fade-in">
           <p className="text-sm font-medium text-primary uppercase tracking-widest mb-2">
             {lang === "fr" ? "Parcours Académique" : "Academic Background"}
@@ -50,7 +48,6 @@ export const Education = () => {
           </h2>
         </div>
 
-        {/* List */}
         <div className="space-y-0">
           {educations.map((edu, idx) => (
             <div
@@ -58,7 +55,6 @@ export const Education = () => {
               className="grid md:grid-cols-[200px_1fr] gap-8 py-10 border-b border-border last:border-0 animate-fade-in"
               style={{ animationDelay: `${(idx + 1) * 100}ms` }}
             >
-              {/* Left: period + current badge */}
               <div>
                 <p className="text-sm text-muted-foreground font-medium">
                   {lang === "fr" ? edu.period_fr : edu.period}
@@ -71,22 +67,17 @@ export const Education = () => {
                 )}
               </div>
 
-              {/* Right: content */}
               <div className="flex gap-5">
-                {/* Logo */}
                 <div className="flex-shrink-0 w-12 h-12 rounded-lg overflow-hidden border border-border bg-secondary flex items-center justify-center">
                   {edu.logo ? (
                     <img src={edu.logo} alt={edu.school} className="w-full h-full object-cover" />
                   ) : (
-                    <div className="w-full h-full bg-muted flex items-center justify-center">
-                      <span className="text-xs font-bold text-muted-foreground">
-                        {edu.school.charAt(0)}
-                      </span>
-                    </div>
+                    <span className="text-xs font-bold text-muted-foreground">
+                      {edu.school.charAt(0)}
+                    </span>
                   )}
                 </div>
 
-                {/* Text */}
                 <div className="flex-1">
                   <h3 className="text-xl font-semibold text-foreground">{edu.school}</h3>
                   <p className="text-primary font-medium mt-0.5">
@@ -103,10 +94,7 @@ export const Education = () => {
                   {edu.tags.length > 0 && (
                     <div className="flex flex-wrap gap-2 mt-4">
                       {edu.tags.map((tag, i) => (
-                        <span
-                          key={i}
-                          className="px-3 py-1 bg-secondary text-xs rounded-full text-muted-foreground border border-border"
-                        >
+                        <span key={i} className="px-3 py-1 bg-secondary text-xs rounded-full text-muted-foreground border border-border">
                           {tag}
                         </span>
                       ))}
