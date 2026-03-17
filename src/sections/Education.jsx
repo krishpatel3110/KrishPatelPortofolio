@@ -1,5 +1,5 @@
 import { useLang } from "@/context/LanguageContext";
-import njitLogo from "/njit.png"; // place njit.png in your /public folder
+import njitLogo from "/njit.jpg"; // place njit.png in your /public folder
 
 const educations = [
   {
