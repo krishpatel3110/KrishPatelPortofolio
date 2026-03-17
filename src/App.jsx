@@ -6,10 +6,11 @@ import { Projects } from "@/sections/Projects";
 import { Testimonials } from "@/sections/Testimonials";
 import { Contact } from "@/sections/Contact";
 import { Courses } from "@/sections/Courses";
+import { Education } from "@/sections/Education";
 import { Navbar } from "@/layout/Navbar";
 import { Footer } from "@/layout/Footer";
 import { LanguageProvider } from "@/context/LanguageContext";
-import { CustomCursor } from "@/components/Customcursor";
+import { CustomCursor } from "@/components/CustomCursor";
 
 const PageWrapper = ({ children }) => (
   <div className="min-h-screen overflow-x-hidden">
@@ -22,10 +23,16 @@ const PageWrapper = ({ children }) => (
 function App() {
   return (
     <LanguageProvider>
-    <CustomCursor />
+      <CustomCursor />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<PageWrapper><Hero /></PageWrapper>} />
+          <Route path="/" element={
+            <PageWrapper>
+              <Hero />
+              <About />
+              <Education />
+            </PageWrapper>
+          } />
           <Route path="/about" element={<PageWrapper><About /></PageWrapper>} />
           <Route path="/projects" element={<PageWrapper><Projects /></PageWrapper>} />
           <Route path="/experience" element={<PageWrapper><Experience /></PageWrapper>} />
