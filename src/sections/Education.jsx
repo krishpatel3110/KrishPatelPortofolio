@@ -1,4 +1,10 @@
 import { useLang } from "@/context/LanguageContext";
+import { useEffect } from "react";
+import { useState } from "react";     
+import { CustomCursor } from "@/components/CustomCursor";
+import { Hero } from "@/sections/Hero";
+import { About } from "@/sections/About";
+import { Experience } from "@/sections/Experience";
 
 const educations = [
   {
