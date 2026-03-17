@@ -9,7 +9,7 @@ import { Courses } from "@/sections/Courses";
 import { Navbar } from "@/layout/Navbar";
 import { Footer } from "@/layout/Footer";
 import { LanguageProvider } from "@/context/LanguageContext";
-import
+import { CustomCursor } from "@/components/Customcursor";
 
 const PageWrapper = ({ children }) => (
   <div className="min-h-screen overflow-x-hidden">
