@@ -9,6 +9,7 @@ import { Courses } from "@/sections/Courses";
 import { Navbar } from "@/layout/Navbar";
 import { Footer } from "@/layout/Footer";
 import { LanguageProvider } from "@/context/LanguageContext";
+import
 
 const PageWrapper = ({ children }) => (
   <div className="min-h-screen overflow-x-hidden">
@@ -21,6 +22,7 @@ const PageWrapper = ({ children }) => (
 function App() {
   return (
     <LanguageProvider>
+    <CustomCursor />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<PageWrapper><Hero /></PageWrapper>} />
