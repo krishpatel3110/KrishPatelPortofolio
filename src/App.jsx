@@ -29,11 +29,11 @@ function App() {
           <Route path="/" element={
             <PageWrapper>
               <Hero />
-              <About />
+              
               <Education />
             </PageWrapper>
           } />
-          <Route path="/about" element={<PageWrapper><About /> <Education /></PageWrapper>} />
+          <Route path="/about" element={<PageWrapper><About /> </PageWrapper>} />
           <Route path="/projects" element={<PageWrapper><Projects /></PageWrapper>} />
           <Route path="/experience" element={<PageWrapper><Experience /></PageWrapper>} />
           <Route path="/certifications" element={<PageWrapper><Testimonials /></PageWrapper>} />
