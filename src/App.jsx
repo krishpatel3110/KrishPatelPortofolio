@@ -11,6 +11,7 @@ import { Navbar } from "@/layout/Navbar";
 import { Footer } from "@/layout/Footer";
 import { LanguageProvider } from "@/context/LanguageContext";
 import { CustomCursor } from "@/components/CustomCursor";
+import { Guestbook } from "@/components/Guestbook";
 
 const PageWrapper = ({ children }) => (
   <div className="min-h-screen overflow-x-hidden">
@@ -24,6 +25,7 @@ function App() {
   return (
     <LanguageProvider>
       <CustomCursor />
+      <Guestbook />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={
