@@ -86,6 +86,14 @@ const translations = {
     contact_error: "Failed to send. Please try again.",
     contact_available: "Currently Available",
     contact_available_desc: "Open to new opportunities and exciting projects. Whether you need a developer or a collaborator, let's talk!",
+    contact_info_email: "EMAIL",
+    contact_info_phone: "PHONE",
+    contact_info_location: "LOCATION",
+
+    // 404
+    notfound_title: "Page Not Found",
+    notfound_desc: "Oops! The page you're looking for doesn't exist or has been moved.",
+    notfound_back: "Back to Home",
 
     // Footer
     footer_rights: "All rights reserved.",
@@ -175,6 +183,14 @@ const translations = {
     contact_error: "Échec de l'envoi. Veuillez réessayer.",
     contact_available: "Actuellement Disponible",
     contact_available_desc: "Ouvert aux nouvelles opportunités et projets passionnants. Que vous ayez besoin d'un développeur ou d'un collaborateur, parlons-en !",
+    contact_info_email: "EMAIL",
+    contact_info_phone: "TÉLÉPHONE",
+    contact_info_location: "LOCALISATION",
+
+    // 404
+    notfound_title: "Page introuvable",
+    notfound_desc: "Oups ! La page que vous cherchez n'existe pas ou a été déplacée.",
+    notfound_back: "Retour à l'accueil",
 
     // Footer
     footer_rights: "Tous droits réservés.",

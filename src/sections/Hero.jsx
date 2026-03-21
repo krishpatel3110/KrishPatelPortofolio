@@ -1,7 +1,7 @@
 import { Button } from "@/components/Button";
 import { ArrowRight, Download } from "lucide-react";
-import { Github, Linkedin, Instagram } from "lucide-react";
 import { useLang } from "@/context/LanguageContext";
+import { SOCIAL_LINKS } from "@/constants/socials";
 
 export const Hero = () => {
   const { t } = useLang();
@@ -76,16 +76,13 @@ export const Hero = () => {
 
             <div className="flex items-center gap-4 animate-fade-in animation-delay-400">
               <span className="text-sm text-muted-foreground">{t("hero_follow")} </span>
-              {[
-                { icon: Github, href: "https://github.com/krishpatel3110" },
-                { icon: Linkedin, href: "https://www.linkedin.com/in/krish-p-58a83a323/" },
-                { icon: Instagram, href: "https://www.instagram.com/ptl.krishh?igsh=MTJzcTU4ODByYWMxeA%3D%3D&utm_source=qr" },
-              ].map((social, idx) => (
+              {SOCIAL_LINKS.map((social, idx) => (
                 <a
                   key={idx}
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label={social.label}
                   className="p-2 rounded-full glass hover:bg-primary/10 hover:text-primary transition-all duration-300"
                 >
                   <social.icon className="w-5 h-5" />
@@ -103,6 +100,7 @@ export const Hero = () => {
                   <img
                     src="/krishfond.png"
                     alt="Krish Patel"
+                    loading="lazy"
                     className="w-full h-full object-cover"
                     style={{ objectPosition: "50% 0%" }}
                   />

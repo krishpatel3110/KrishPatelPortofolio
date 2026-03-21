@@ -143,6 +143,7 @@ export const Navbar = () => {
         <button
           className={`lg:hidden p-2 text-xl ${logoColor}`}
           onClick={() => setMenuOpen((p) => !p)}
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
         >
           {menuOpen ? "✕" : "☰"}
         </button>

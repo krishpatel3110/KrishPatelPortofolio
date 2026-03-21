@@ -2,17 +2,19 @@ import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle } from "lucide-reac
 import { Button } from "@/components/Button";
 import { useState } from "react";
 import emailjs from "@emailjs/browser";
-
-const contactInfo = [
-  { icon: Mail, label: "Email", value: "patelkrishh3110@gmail.com", href: "mailto:patelkrishh3110@gmail.com" },
-  { icon: Phone, label: "Phone", value: "+1 (205) 440-0372", href: "tel:+12054400372" },
-  { icon: MapPin, label: "Location", value: "New Jersey, USA", href: "#" },
-];
+import { useLang } from "@/context/LanguageContext";
 
 export const Contact = () => {
+  const { t } = useLang();
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [isLoading, setIsLoading] = useState(false);
   const [submitStatus, setSubmitStatus] = useState({ type: null, message: "" });
+
+  const contactInfo = [
+    { icon: Mail, label: t("contact_info_email"), value: "patelkrishh3110@gmail.com", href: "mailto:patelkrishh3110@gmail.com" },
+    { icon: Phone, label: t("contact_info_phone"), value: "+1 (205) 440-0372", href: "tel:+12054400372" },
+    { icon: MapPin, label: t("contact_info_location"), value: "New Jersey, USA", href: "#" },
+  ];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,10 +26,10 @@ export const Contact = () => {
       const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
       if (!serviceId || !templateId || !publicKey) throw new Error("EmailJS configuration is missing.");
       await emailjs.send(serviceId, templateId, { name: formData.name, email: formData.email, message: formData.message }, publicKey);
-      setSubmitStatus({ type: "success", message: "Message sent! I'll get back to you soon." });
+      setSubmitStatus({ type: "success", message: t("contact_success") });
       setFormData({ name: "", email: "", message: "" });
     } catch (error) {
-      setSubmitStatus({ type: "error", message: error.text || "Failed to send. Please try again." });
+      setSubmitStatus({ type: "error", message: error.text || t("contact_error") });
     } finally {
       setIsLoading(false);
     }
@@ -39,9 +41,9 @@ export const Contact = () => {
 
         {/* Header */}
         <div className="mb-16 border-b border-border pb-6 animate-fade-in">
-          <p className="text-sm font-medium text-primary uppercase tracking-widest mb-2">Get In Touch</p>
+          <p className="text-sm font-medium text-primary uppercase tracking-widest mb-2">{t("contact_label")}</p>
           <h2 className="text-4xl md:text-5xl font-bold text-foreground">
-            Let's build <span className="font-serif italic font-normal text-foreground/60">something great.</span>
+            {t("contact_title")} <span className="font-serif italic font-normal text-foreground/60">{t("contact_title_italic")}</span>
           </h2>
         </div>
 
@@ -50,34 +52,34 @@ export const Contact = () => {
           {/* Form */}
           <form className="space-y-6 animate-fade-in animation-delay-100" onSubmit={handleSubmit}>
             <div>
-              <label className="block text-sm font-medium text-foreground mb-2">Name</label>
+              <label className="block text-sm font-medium text-foreground mb-2">{t("contact_name")}</label>
               <input
-                type="text" required placeholder="Your name..."
+                type="text" required placeholder={t("contact_name_ph")}
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 className="w-full px-4 py-3 bg-background rounded-xl border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-foreground placeholder:text-muted-foreground"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-foreground mb-2">Email</label>
+              <label className="block text-sm font-medium text-foreground mb-2">{t("contact_email")}</label>
               <input
-                type="email" required placeholder="your@email.com"
+                type="email" required placeholder={t("contact_email_ph")}
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 className="w-full px-4 py-3 bg-background rounded-xl border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all text-foreground placeholder:text-muted-foreground"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-foreground mb-2">Message</label>
+              <label className="block text-sm font-medium text-foreground mb-2">{t("contact_message")}</label>
               <textarea
-                rows={5} required placeholder="Your message..."
+                rows={5} required placeholder={t("contact_message_ph")}
                 value={formData.message}
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                 className="w-full px-4 py-3 bg-background rounded-xl border border-border focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all resize-none text-foreground placeholder:text-muted-foreground"
               />
             </div>
             <Button className="w-full" type="submit" size="lg" disabled={isLoading}>
-              {isLoading ? "Sending..." : <><Send className="w-5 h-5" /> Send Message</>}
+              {isLoading ? t("contact_sending") : <><Send className="w-5 h-5" /> {t("contact_send")}</>}
             </Button>
             {submitStatus.type && (
               <div className={`flex items-center gap-3 p-4 rounded-xl ${submitStatus.type === "success" ? "bg-green-500/10 border border-green-500/20 text-green-600" : "bg-red-500/10 border border-red-500/20 text-red-600"}`}>
@@ -105,10 +107,10 @@ export const Contact = () => {
             <div className="p-6 rounded-2xl border border-border bg-secondary/30">
               <div className="flex items-center gap-2 mb-3">
                 <span className="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse" />
-                <span className="font-medium text-foreground">Currently Available</span>
+                <span className="font-medium text-foreground">{t("contact_available")}</span>
               </div>
               <p className="text-muted-foreground text-sm leading-relaxed">
-                Open to new opportunities and exciting projects. Whether you need a developer or a collaborator, let's talk!
+                {t("contact_available_desc")}
               </p>
             </div>
           </div>

@@ -7,16 +7,21 @@ import { Testimonials } from "@/sections/Testimonials";
 import { Contact } from "@/sections/Contact";
 import { Courses } from "@/sections/Courses";
 import { Education } from "@/sections/Education";
+import { NotFound } from "@/sections/NotFound";
 import { Navbar } from "@/layout/Navbar";
 import { Footer } from "@/layout/Footer";
 import { LanguageProvider } from "@/context/LanguageContext";
 import { CustomCursor } from "@/components/CustomCursor";
 import { Guestbook } from "@/components/Guestbook";
+import { ScrollToTop } from "@/components/ScrollToTop";
+import { PageTransition } from "@/components/PageTransition";
 
 const PageWrapper = ({ children }) => (
   <div className="min-h-screen overflow-x-hidden">
     <Navbar />
-    <main>{children}</main>
+    <main>
+      <PageTransition>{children}</PageTransition>
+    </main>
     <Footer />
   </div>
 );
@@ -27,6 +32,7 @@ function App() {
       <CustomCursor />
       <Guestbook />
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={
             <PageWrapper>
@@ -41,6 +47,7 @@ function App() {
           <Route path="/certifications" element={<PageWrapper><Testimonials /></PageWrapper>} />
           <Route path="/contact" element={<PageWrapper><Contact /></PageWrapper>} />
           <Route path="/courses" element={<PageWrapper><Courses /></PageWrapper>} />
+          <Route path="*" element={<PageWrapper><NotFound /></PageWrapper>} />
         </Routes>
       </BrowserRouter>
     </LanguageProvider>

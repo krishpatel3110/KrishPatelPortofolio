@@ -29,7 +29,6 @@ export const Guestbook = () => {
   useEffect(() => {
     fetchMessages();
 
-    // Realtime subscription
     const channel = supabase
       .channel("guestbook-changes")
       .on("postgres_changes", { event: "INSERT", schema: "public", table: "guestbook" }, (payload) => {
@@ -73,59 +72,43 @@ export const Guestbook = () => {
     <>
       {/* Popup */}
       <div
-        style={{
-          position: "fixed",
-          bottom: "84px",
-          right: "20px",
-          width: "300px",
-          background: "var(--color-background, #fff)",
-          border: "1px solid var(--color-border, #e5e7eb)",
-          borderRadius: "16px",
-          boxShadow: "0 8px 32px rgba(0,0,0,0.14)",
-          zIndex: 9990,
-          overflow: "hidden",
-          transformOrigin: "bottom right",
-          transform: open ? "scale(1)" : "scale(0.85)",
-          opacity: open ? 1 : 0,
-          pointerEvents: open ? "auto" : "none",
-          transition: "transform 0.25s cubic-bezier(.34,1.56,.64,1), opacity 0.2s ease",
-        }}
+        className={`fixed bottom-[84px] right-5 w-[300px] bg-background border border-border rounded-2xl shadow-2xl z-[9990] overflow-hidden origin-bottom-right transition-all duration-200 ${
+          open ? "scale-100 opacity-100 pointer-events-auto" : "scale-[0.85] opacity-0 pointer-events-none"
+        }`}
       >
         {/* Header */}
-        <div style={{ background: "#b25120", padding: "14px 16px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-            <span style={{ fontSize: "16px" }}>💬</span>
-            <span style={{ color: "white", fontWeight: 700, fontSize: "13px" }}>Guestbook</span>
+        <div className="bg-primary px-4 py-3.5 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className="text-base">💬</span>
+            <span className="text-white font-bold text-[13px]">Guestbook</span>
           </div>
-          <span style={{ background: "rgba(255,255,255,0.2)", color: "white", fontSize: "10px", padding: "2px 8px", borderRadius: "20px" }}>
+          <span className="bg-white/20 text-white text-[10px] px-2 py-0.5 rounded-full">
             {messages.length} messages
           </span>
         </div>
 
         {/* Messages */}
-        <div style={{ maxHeight: "200px", overflowY: "auto", padding: "12px", display: "flex", flexDirection: "column", gap: "10px" }}>
-          {loading && <p style={{ fontSize: "11px", color: "var(--color-muted-foreground)", textAlign: "center" }}>Loading...</p>}
+        <div className="max-h-[200px] overflow-y-auto p-3 flex flex-col gap-2.5">
+          {loading && <p className="text-[11px] text-muted-foreground text-center">Loading...</p>}
           {!loading && messages.length === 0 && (
-            <p style={{ fontSize: "11px", color: "var(--color-muted-foreground)", textAlign: "center", padding: "12px 0" }}>
+            <p className="text-[11px] text-muted-foreground text-center py-3">
               Be the first to leave a message! 👋
             </p>
           )}
           {messages.map((msg) => (
-            <div key={msg.id} style={{ display: "flex", gap: "8px", alignItems: "flex-start" }}>
-              <div style={{
-                width: "28px", height: "28px", borderRadius: "50%",
-                background: getColor(msg.name), color: "white",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                fontSize: "11px", fontWeight: 700, flexShrink: 0,
-              }}>
+            <div key={msg.id} className="flex gap-2 items-start">
+              <div
+                className="w-7 h-7 rounded-full text-white flex items-center justify-center text-[11px] font-bold shrink-0"
+                style={{ background: getColor(msg.name) }}
+              >
                 {getInitial(msg.name)}
               </div>
-              <div style={{ flex: 1 }}>
-                <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-                  <span style={{ fontSize: "11px", fontWeight: 700, color: "var(--color-foreground)" }}>{msg.name}</span>
-                  <span style={{ fontSize: "9px", color: "var(--color-muted-foreground)" }}>{timeAgo(msg.created_at)}</span>
+              <div className="flex-1">
+                <div className="flex items-center gap-1.5">
+                  <span className="text-[11px] font-bold text-foreground">{msg.name}</span>
+                  <span className="text-[9px] text-muted-foreground">{timeAgo(msg.created_at)}</span>
                 </div>
-                <p style={{ fontSize: "11px", color: "var(--color-muted-foreground)", margin: "2px 0 0" }}>{msg.message}</p>
+                <p className="text-[11px] text-muted-foreground mt-0.5">{msg.message}</p>
               </div>
             </div>
           ))}
@@ -133,42 +116,27 @@ export const Guestbook = () => {
         </div>
 
         {/* Input */}
-        <div style={{ padding: "10px 12px", borderTop: "1px solid var(--color-border)", display: "flex", flexDirection: "column", gap: "6px" }}>
+        <div className="p-2.5 border-t border-border flex flex-col gap-1.5">
           <input
             type="text"
             placeholder="Your name..."
             value={name}
             onChange={(e) => setName(e.target.value)}
-            style={{
-              border: "1px solid var(--color-border)", borderRadius: "8px",
-              padding: "6px 10px", fontSize: "11px",
-              background: "var(--color-background)", color: "var(--color-foreground)",
-              outline: "none", width: "100%", boxSizing: "border-box",
-            }}
+            className="border border-border rounded-lg px-2.5 py-1.5 text-[11px] bg-background text-foreground outline-none w-full"
           />
-          <div style={{ display: "flex", gap: "6px" }}>
+          <div className="flex gap-1.5">
             <input
               type="text"
               placeholder="Leave a message..."
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
-              style={{
-                flex: 1, border: "1px solid var(--color-border)", borderRadius: "8px",
-                padding: "6px 10px", fontSize: "11px",
-                background: "var(--color-background)", color: "var(--color-foreground)",
-                outline: "none",
-              }}
+              className="flex-1 border border-border rounded-lg px-2.5 py-1.5 text-[11px] bg-background text-foreground outline-none"
             />
             <button
               onClick={handleSubmit}
               disabled={submitting || !name.trim() || !message.trim()}
-              style={{
-                background: "#b25120", color: "white", border: "none",
-                borderRadius: "8px", padding: "0 12px", cursor: "pointer",
-                fontSize: "13px", opacity: (submitting || !name.trim() || !message.trim()) ? 0.5 : 1,
-                transition: "opacity 0.2s",
-              }}
+              className="bg-primary text-white border-none rounded-lg px-3 cursor-pointer text-[13px] disabled:opacity-50 transition-opacity hover:bg-primary/90"
             >
               {submitting ? "..." : "→"}
             </button>
@@ -179,16 +147,8 @@ export const Guestbook = () => {
       {/* FAB button */}
       <button
         onClick={() => setOpen((o) => !o)}
-        style={{
-          position: "fixed", bottom: "20px", right: "20px",
-          width: "52px", height: "52px", borderRadius: "50%",
-          background: "#b25120", border: "none", cursor: "pointer",
-          display: "flex", alignItems: "center", justifyContent: "center",
-          boxShadow: "0 4px 16px rgba(178,81,32,0.45)",
-          zIndex: 9991, transition: "transform 0.2s",
-        }}
-        onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.1)"}
-        onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
+        aria-label="Open guestbook"
+        className="fixed bottom-5 right-5 w-[52px] h-[52px] rounded-full bg-primary border-none cursor-pointer flex items-center justify-center shadow-[0_4px_16px_rgba(178,81,32,0.45)] z-[9991] transition-transform hover:scale-110"
       >
         <svg width="22" height="22" viewBox="0 0 24 24" fill="white">
           {open
@@ -197,13 +157,7 @@ export const Guestbook = () => {
           }
         </svg>
         {!open && messages.length > 0 && (
-          <div style={{
-            position: "absolute", top: "-4px", right: "-4px",
-            width: "18px", height: "18px", background: "#ef4444",
-            borderRadius: "50%", border: "2px solid white",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            fontSize: "9px", color: "white", fontWeight: 700,
-          }}>
+          <div className="absolute -top-1 -right-1 w-[18px] h-[18px] bg-red-500 rounded-full border-2 border-white flex items-center justify-center text-[9px] text-white font-bold">
             {messages.length > 9 ? "9+" : messages.length}
           </div>
         )}
