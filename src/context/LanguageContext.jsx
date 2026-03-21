@@ -39,6 +39,7 @@ const translations = {
     about_prog: "Programming Languages",
     about_frameworks: "Frameworks / Libraries",
     about_languages: "Languages",
+    about_tools: "Tools & Technologies",
 
     // Experience
     exp_label: "Career Journey",
@@ -127,6 +128,7 @@ const translations = {
     about_prog: "Langages de Programmation",
     about_frameworks: "Frameworks / Bibliothèques",
     about_languages: "Langues",
+    about_tools: "Outils & Technologies",
 
     // Experience
     exp_label: "Parcours Professionnel",
